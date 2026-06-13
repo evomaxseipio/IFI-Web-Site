@@ -959,7 +959,7 @@ function setContactFormStatus(message,type){
 
   form.addEventListener('submit',async(e)=>{
     e.preventDefault();
-    if(form.action.includes('mwvjwbnl')){
+    if(form.action.includes('YOUR_FORM_ID')){
       setContactFormStatus('Falta configurar Formspree: reemplaza YOUR_FORM_ID en el formulario de contacto.','error');
       return;
     }
