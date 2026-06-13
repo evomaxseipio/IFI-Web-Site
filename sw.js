@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'ifi-v5';
+const CACHE_VERSION = 'ifi-v7';
 const STATIC_CACHE = `ifi-static-${CACHE_VERSION}`;
 
 const PRECACHE = [
