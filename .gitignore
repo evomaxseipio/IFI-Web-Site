@@ -1,0 +1,12 @@
+# Archivos fuente y temporales
+*.zip
+ChatGPT Image*.png
+logo transparente.png
+
+# Versiones y carpetas de trabajo anteriores
+fuente_inagotable_final.html
+ifi-web-page/
+
+# Sistema
+.DS_Store
+Thumbs.db
