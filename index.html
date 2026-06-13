@@ -282,6 +282,10 @@ nav{position:sticky;top:0;z-index:500;background:rgba(255,255,255,.97);border-bo
 .fg textarea{min-height:100px;}
 #contacto .form-submit{width:100%;font-family:'Manrope',sans-serif;font-size:var(--fs-sm);font-weight:700;letter-spacing:.5px;background:var(--navy);color:var(--white);border:none;border-radius:var(--btn-radius);padding:.95rem 1.5rem;cursor:pointer;transition:background .25s;}
 #contacto .form-submit:hover{background:var(--navy-light);}
+#contacto .form-submit:disabled{opacity:.7;cursor:wait;}
+.form-status{margin-top:.85rem;font-size:var(--fs-sm);line-height:1.5;}
+.form-status.is-error{color:#B91C1C;}
+.form-status.is-success{color:#059669;}
 
 /* FOOTER */
 footer{background:var(--navy-deep);padding:clamp(48px,7vw,72px) var(--page-x) 32px;}
@@ -803,28 +807,31 @@ footer{background:var(--navy-deep);padding:clamp(48px,7vw,72px) var(--page-x) 32
         <div class="c-item"><div class="c-ico" aria-hidden="true"><svg class="c-ico-fill" viewBox="0 0 24 24"><path d="M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4Zm5 4.5A4.5 4.5 0 1 0 16.5 12 4.5 4.5 0 0 0 12 7.5Zm5.25-2.75a1 1 0 1 0 1 1 1 1 0 0 0-1-1Z"/></svg></div><div><div class="c-label">Instagram</div><div class="c-val"><a href="https://instagram.com/FuenteInagotableRD" target="_blank" rel="noopener noreferrer">@FuenteInagotableRD</a></div></div></div>
       </div>
       <div class="reveal" style="transition-delay:.15s;">
-        <div class="form-wrap">
+        <form id="contactForm" class="form-wrap" action="https://formspree.io/f/mwvjwbnl" method="POST" novalidate>
           <h3>Escríbenos</h3>
+          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none"/>
+          <input type="hidden" name="_subject" value="Nuevo mensaje — Iglesia Fuente Inagotable"/>
           <div class="form-row">
-            <div class="fg"><label>Nombre</label><input type="text" placeholder="Tu nombre"/></div>
-            <div class="fg"><label>Apellido</label><input type="text" placeholder="Tu apellido"/></div>
+            <div class="fg"><label for="contactNombre">Nombre</label><input id="contactNombre" type="text" name="nombre" placeholder="Tu nombre" required autocomplete="given-name"/></div>
+            <div class="fg"><label for="contactApellido">Apellido</label><input id="contactApellido" type="text" name="apellido" placeholder="Tu apellido" required autocomplete="family-name"/></div>
           </div>
-          <div class="fg"><label>Correo</label><input type="email" placeholder="tu@correo.com"/></div>
-          <div class="fg"><label>Motivo</label>
-            <select>
+          <div class="fg"><label for="contactEmail">Correo</label><input id="contactEmail" type="email" name="email" placeholder="tu@correo.com" required autocomplete="email"/></div>
+          <div class="fg"><label for="contactMotivo">Motivo</label>
+            <select id="contactMotivo" name="motivo" required>
               <option value="">¿En qué podemos ayudarte?</option>
-              <option>Primera visita</option>
-              <option>Solicitud de oración</option>
-              <option>Información de ministerios</option>
-              <option>Consejería pastoral</option>
-              <option>Apoyo a proyectos</option>
-              <option>Donaciones</option>
-              <option>Otro</option>
+              <option value="Primera visita">Primera visita</option>
+              <option value="Solicitud de oración">Solicitud de oración</option>
+              <option value="Información de ministerios">Información de ministerios</option>
+              <option value="Consejería pastoral">Consejería pastoral</option>
+              <option value="Apoyo a proyectos">Apoyo a proyectos</option>
+              <option value="Donaciones">Donaciones</option>
+              <option value="Otro">Otro</option>
             </select>
           </div>
-          <div class="fg"><label>Mensaje</label><textarea placeholder="Cuéntanos..."></textarea></div>
-          <button class="form-submit" onclick="submitForm(this)">Enviar mensaje</button>
-        </div>
+          <div class="fg"><label for="contactMensaje">Mensaje</label><textarea id="contactMensaje" name="mensaje" placeholder="Cuéntanos..." required minlength="10" maxlength="2000"></textarea></div>
+          <button type="submit" class="form-submit">Enviar mensaje</button>
+          <p class="form-status" id="contactFormStatus" role="status" aria-live="polite" hidden></p>
+        </form>
       </div>
     </div>
   </div>
@@ -936,11 +943,76 @@ function toggleFaq(el){
   if(!wasOpen)item.classList.add('open');
 }
 
-function submitForm(btn){
-  btn.textContent='¡MENSAJE ENVIADO!';
-  btn.style.background='#059669';
-  setTimeout(()=>{btn.textContent='Enviar mensaje';btn.style.background='';},3500);
+function setContactFormStatus(message,type){
+  const status=document.getElementById('contactFormStatus');
+  if(!status)return;
+  status.textContent=message;
+  status.className='form-status'+(type?' is-'+type:'');
+  status.hidden=!message;
 }
+
+(function initContactForm(){
+  const form=document.getElementById('contactForm');
+  if(!form)return;
+  const btn=form.querySelector('.form-submit');
+  const defaultLabel=btn?btn.textContent:'Enviar mensaje';
+
+  form.addEventListener('submit',async(e)=>{
+    e.preventDefault();
+    if(form.action.includes('mwvjwbnl')){
+      setContactFormStatus('Falta configurar Formspree: reemplaza YOUR_FORM_ID en el formulario de contacto.','error');
+      return;
+    }
+    if(!form.checkValidity()){
+      form.reportValidity();
+      return;
+    }
+
+    const data=new FormData(form);
+    data.set('_replyto',data.get('email')||'');
+
+    if(btn){
+      btn.disabled=true;
+      btn.textContent='Enviando...';
+    }
+    setContactFormStatus('','');
+
+    try{
+      const response=await fetch(form.action,{
+        method:'POST',
+        body:data,
+        headers:{Accept:'application/json'}
+      });
+      const result=await response.json().catch(()=>({}));
+      if(response.ok){
+        form.reset();
+        if(btn){
+          btn.textContent='¡Mensaje enviado!';
+          btn.style.background='#059669';
+        }
+        setContactFormStatus('Gracias. Hemos recibido tu mensaje y te responderemos pronto.','success');
+        setTimeout(()=>{
+          if(btn){
+            btn.textContent=defaultLabel;
+            btn.style.background='';
+            btn.disabled=false;
+          }
+          setContactFormStatus('','');
+        },5000);
+        return;
+      }
+      const detail=Array.isArray(result.errors)?result.errors.map(err=>err.message).join(' '):(result.error||'No se pudo enviar el mensaje. Intenta de nuevo.');
+      setContactFormStatus(detail,'error');
+    }catch{
+      setContactFormStatus('Error de conexión. Revisa tu internet e intenta de nuevo.','error');
+    }
+
+    if(btn){
+      btn.textContent=defaultLabel;
+      btn.disabled=false;
+    }
+  });
+})();
 
 function slideEvents(dir){
   if(!window._eventsGoTo)return;
