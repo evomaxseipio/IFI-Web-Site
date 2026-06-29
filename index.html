@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Iglesia Fuente Inagotable — Asambleas de Dios · San Pedro de Macorís</title>
+<title>Iglesia Fuente Inagotable — Asambleas de Dios</title>
 <meta name="description" content="Congregación evangélica en San Pedro de Macorís. Proclamamos el evangelio, discipulamos vidas y servimos a nuestra comunidad desde 1998."/>
 <link rel="manifest" href="manifest.webmanifest"/>
 <meta name="theme-color" content="#0E2A4A"/>
@@ -32,7 +32,6 @@
   --text-muted:#44556B;
   --text-soft:#5A6B7E;
   --white:#FFFFFF;
-  --topbar-h:36px;
   --nav-h:64px;
   --page-x:clamp(12px,2.5vw,28px);
   --btn-radius:9999px;
@@ -50,16 +49,21 @@ img{display:block;max-width:100%;}
 a{color:inherit;}
 section{scroll-margin-top:calc(var(--nav-h) + 8px);}
 
-/* TOPBAR */
-.topbar{background:var(--navy-deep);color:rgba(255,255,255,.75);font-size:12.5px;padding:8px var(--page-x);display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 24px;}
-.topbar a{color:rgba(255,255,255,.75);text-decoration:none;transition:color .2s;}
-.topbar a:hover{color:var(--gold);}
-.topbar-left{display:flex;flex-wrap:wrap;gap:6px 22px;}
-.topbar-right{display:flex;gap:8px;align-items:center;}
-.topbar-dot{color:var(--gold);font-size:9px;}
+/* EN VIVO — centro del menú; activar con window.EN_VIVO = true */
+.nav-live{display:none;flex:1;justify-content:center;min-width:0;text-decoration:none;padding:0 8px;}
+body.is-live .nav-live{display:flex;}
+.nav-live-box{display:inline-flex;align-items:center;gap:12px;padding:10px 22px 10px 12px;border-radius:999px;animation:navLiveBlink 1s step-end infinite;transition:transform .2s;max-width:100%;}
+.nav-live:hover .nav-live-box{transform:scale(1.03);}
+.nav-live-play{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.nav-live-play svg{width:18px;height:18px;fill:currentColor;margin-left:2px;}
+.nav-live-copy{display:flex;flex-direction:column;gap:2px;line-height:1.2;min-width:0;text-align:left;}
+.nav-live-title{font-size:clamp(15px,1.6vw,17px);font-weight:800;letter-spacing:.6px;}
+.nav-live-sub{font-size:clamp(13px,1.3vw,15px);font-weight:600;opacity:.95;white-space:nowrap;}
+@keyframes navLiveBlink{0%,49%{background:transparent;color:#C62828;box-shadow:0 0 0 2.5px #E53935}50%,100%{background:#E53935;color:var(--white);box-shadow:0 0 14px rgba(229,57,53,.35)}}
 
 /* NAV */
-nav{position:sticky;top:0;z-index:500;background:rgba(255,255,255,.97);border-bottom:1px solid #E8E3D6;padding:14px var(--page-x);display:flex;align-items:center;justify-content:space-between;gap:10px 24px;backdrop-filter:blur(8px);}
+nav{position:sticky;top:0;z-index:500;background:rgba(255,255,255,.97);border-bottom:1px solid #E8E3D6;padding:14px var(--page-x);display:flex;align-items:center;gap:12px 20px;backdrop-filter:blur(8px);}
+.nav-end{margin-left:auto;display:flex;align-items:center;gap:10px 22px;flex-shrink:0;}
 .logo{display:flex;align-items:center;gap:14px;text-decoration:none;flex-shrink:0;}
 .logo-img{width:56px;height:56px;min-width:56px;max-width:none;object-fit:contain;flex-shrink:0;display:block;}
 .logo-tittle{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,3.2vw,34px);font-weight:700;color:var(--navy);letter-spacing:.02em;line-height:1;margin:0;white-space:nowrap;}
@@ -182,11 +186,18 @@ nav{position:sticky;top:0;z-index:500;background:rgba(255,255,255,.97);border-bo
 /* PROGRAMAS */
 #programas{background:var(--cream);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
 .programas-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:clamp(32px,5vw,72px);align-items:start;}
-.programas-highlight{margin-top:28px;background:var(--navy);border-radius:3px;padding:24px 26px;max-width:420px;}
+.programas-schedule{display:flex;flex-direction:column;gap:0;}
+.programas-highlight{background:var(--navy);border-radius:3px;padding:clamp(22px,3vw,28px) clamp(24px,3.5vw,30px);margin-bottom:20px;}
 .programas-highlight p:first-child{font-size:11px;letter-spacing:2.5px;color:var(--gold);font-weight:800;margin-bottom:8px;}
-.programas-highlight h3{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:26px;color:var(--white);margin-bottom:8px;}
-.programas-highlight p:last-child{font-size:13.5px;color:rgba(255,255,255,.7);}
-.schedule-list{display:flex;flex-direction:column;}
+.programas-highlight h3{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:clamp(24px,3vw,28px);color:var(--white);margin-bottom:0;line-height:1.2;}
+.programas-location{margin-top:28px;border:1px solid var(--border);border-radius:3px;overflow:hidden;background:var(--white);box-shadow:0 4px 18px rgba(14,42,74,.06);}
+.programas-address{padding:18px 20px;background:var(--white);border-bottom:1px solid var(--border);}
+.programas-address-label{font-size:11px;letter-spacing:2.5px;color:var(--gold-dark);font-weight:800;margin-bottom:8px;}
+.programas-address-text{font-family:'Cormorant Garamond',serif;font-size:clamp(19px,2.2vw,22px);font-weight:600;color:var(--navy);line-height:1.35;}
+.programas-address-city{margin-top:4px;font-size:var(--fs-sm);color:var(--text-muted);font-weight:600;}
+.programas-map{border-radius:0;overflow:hidden;background:var(--white);}
+.programas-map iframe{display:block;width:100%;height:clamp(180px,28vw,220px);border:0;}
+.schedule-list{display:flex;flex-direction:column;background:var(--white);border:1px solid var(--border);border-radius:3px;padding:4px clamp(12px,2vw,18px);}
 .schedule-row{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 16px;padding:16px 4px;border-bottom:1px solid var(--border);}
 .schedule-row:last-child{border-bottom:none;}
 .schedule-day{width:86px;flex-shrink:0;font-size:11.5px;letter-spacing:1.5px;font-weight:800;color:var(--gold-dark);}
@@ -342,6 +353,9 @@ footer{background:var(--navy-deep);padding:clamp(48px,7vw,72px) var(--page-x) 32
 .mob-install svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
 @media(max-width:900px){.mob-install{display:flex!important;}}
 
+/* TEMPORAL: ocultar donaciones / mayordomía */
+.is-hidden{display:none!important;}
+
 /* REVEAL */
 .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease;}
 .reveal.in{opacity:1;transform:translateY(0);}
@@ -350,7 +364,17 @@ footer{background:var(--navy-deep);padding:clamp(48px,7vw,72px) var(--page-x) 32
 @media(max-width:900px){
   .nav-links,#nav .nav-cta{display:none;}
   .hamburger{display:flex;}
-  .logo-tittle{font-size:clamp(20px,5vw,26px);white-space:normal;line-height:1.15;max-width:min(220px,48vw);}
+  body.is-live{--nav-h:118px;}
+  body.is-live nav{flex-wrap:wrap;row-gap:10px;padding:10px var(--page-x);align-items:center;}
+  body.is-live .logo{flex:1;min-width:0;max-width:calc(100% - 44px);}
+  body.is-live .nav-end{margin-left:auto;flex-shrink:0;}
+  body.is-live .nav-live{order:3;flex:1 1 100%;justify-content:center;padding:0;}
+  body.is-live .nav-live-box{width:100%;max-width:340px;justify-content:center;padding:12px 20px 12px 14px;gap:14px;}
+  body.is-live .nav-live-play{width:44px;height:44px;}
+  body.is-live .nav-live-play svg{width:20px;height:20px;}
+  body.is-live .nav-live-title{font-size:16px;}
+  body.is-live .nav-live-sub{font-size:14px;}
+  .logo-tittle{font-size:clamp(18px,4.6vw,24px);white-space:normal;line-height:1.15;max-width:min(240px,52vw);}
   .logo-img{width:48px;height:48px;}
   .vision-divider{border-left:none;padding-left:0;border-top:1px solid #E0D8C4;padding-top:clamp(36px,5vw,56px);}
   .impacto-list{grid-template-columns:1fr;}
@@ -377,25 +401,24 @@ footer{background:var(--navy-deep);padding:clamp(48px,7vw,72px) var(--page-x) 32
 </style>
 </head>
 <body>
+<script>window.EN_VIVO=true;/* pon false cuando no estén transmitiendo */</script>
 
-<!-- TOPBAR 
-<div class="topbar">
-  <div class="topbar-left">
-    <a href="tel:+18098641072">+1 (809) 864-1072</a>
-    <a href="mailto:fuenteinagotable.spm@gmail.com">fuenteinagotable.spm@gmail.com</a>
-  </div>
-  <div class="topbar-right">
-    <span class="topbar-dot">◆</span>
-    <span>Culto Dominical · Domingos 9:00 AM</span>
-  </div>
-</div>
--->
 <!-- NAV -->
 <nav id="nav">
   <a href="#inicio" class="logo">
     <img class="logo-img" src="assets/logo.png" alt="" width="56" height="56"/>
     <span class="logo-tittle">Iglesia Fuente Inagotable</span>
   </a>
+  <a href="https://youtube.com/@FuenteInagotable" class="nav-live" target="_blank" rel="noopener noreferrer" aria-label="En vivo — únete al culto en YouTube">
+    <span class="nav-live-box">
+      <span class="nav-live-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+      <span class="nav-live-copy">
+        <span class="nav-live-title">En Vivo</span>
+        <span class="nav-live-sub">Únete al culto</span>
+      </span>
+    </span>
+  </a>
+  <div class="nav-end">
   <ul class="nav-links">
     <li><a href="#perfil">Nosotros</a></li>
     <li><a href="#liderazgo">Liderazgo</a></li>
@@ -403,9 +426,10 @@ footer{background:var(--navy-deep);padding:clamp(48px,7vw,72px) var(--page-x) 32
     <li><a href="#programas">Programas</a></li>
     <li><a href="#misiones">Misiones</a></li>
     <li><a href="#proyectos">Proyectos</a></li>
-    <li><a href="#contacto" class="nav-cta">VISÍTANOS</a></li>
+    <li><a href="#programas" class="nav-cta">VISÍTANOS</a></li>
   </ul>
   <div class="hamburger" id="ham" onclick="toggleMenu()" aria-label="Menú"><span></span><span></span><span></span></div>
+  </div>
 </nav>
 <div class="mob-menu" id="mobMenu">
   <a href="#perfil" onclick="closeMenu()">Nosotros</a>
@@ -415,13 +439,13 @@ footer{background:var(--navy-deep);padding:clamp(48px,7vw,72px) var(--page-x) 32
   <a href="#misiones" onclick="closeMenu()">Casas de Misión</a>
   <a href="#impacto" onclick="closeMenu()">Impacto</a>
   <a href="#proyectos" onclick="closeMenu()">Proyectos</a>
-  <a href="#donaciones" onclick="closeMenu()">Donaciones</a>
+  <a href="#donaciones" class="is-hidden" onclick="closeMenu()">Donaciones</a>
   <a href="#faq" onclick="closeMenu()">Preguntas Frecuentes</a>
   <button type="button" class="mob-install" id="mobInstallBtn" onclick="openPwaInstall()">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12"/><path d="M7 8l5-5 5 5"/><path d="M5 21h14"/></svg>
     Instalar en el teléfono
   </button>
-  <a href="#contacto" class="mob-cta" onclick="closeMenu()">Visítanos →</a>
+  <a href="#programas" class="mob-cta" onclick="closeMenu()">Visítanos →</a>
 </div>
 
 <div class="pwa-install" id="pwaInstall" hidden>
@@ -453,16 +477,16 @@ footer{background:var(--navy-deep);padding:clamp(48px,7vw,72px) var(--page-x) 32
   <div class="hero-glow"></div>
   <div class="hero-grid">
     <div>
-      <p class="hero-badge">ASAMBLEAS DE DIOS · DESDE 1998</p>
-      <h1 class="hero-h1">Una fuente de fe, esperanza y servicio en San Pedro de Macorís</h1>
+      <p class="hero-badge is-hidden">ASAMBLEAS DE DIOS · DESDE 1998</p>
+      <h1 class="hero-h1">Una fuente de fe, esperanza y servicio</h1>
       <div class="hero-verse">
         <div class="verse-bar"></div>
         <div class="verse-body">"El que beba del agua que yo le daré, no volverá a tener sed jamás, sino que dentro de él esa agua se convertirá en un manantial del que brotará vida eterna."<cite>Juan 4:14</cite></div>
       </div>
       <p class="hero-sub">Somos una congregación comprometida con la proclamación del evangelio, el discipulado de las nuevas generaciones y el servicio a nuestra comunidad.</p>
       <div class="hero-actions">
-        <a href="#perfil" class="btn-gold">CONOCE LA IGLESIA</a>
-        <a href="#programas" class="btn-outline">HORARIOS DE CULTO</a>
+        <a href="#programas" class="btn-gold">Planifica tu Visita</a>
+        <a href="#contacto" class="btn-outline" data-contact-motivo="Solicitud de oración">Necesito Oración</a>
       </div>
     </div>
     <div class="hero-photo-wrap">
@@ -482,7 +506,7 @@ footer{background:var(--navy-deep);padding:clamp(48px,7vw,72px) var(--page-x) 32
         <div class="gold-line"></div>
       </div>
       <div>
-        <p class="body-p">Iglesia Fuente Inagotable es una congregación cristiana evangélica ubicada en San Pedro de Macorís, República Dominicana. Fundada en 1998, ha desarrollado una labor enfocada en la transformación espiritual y social de las personas, promoviendo el crecimiento integral de las familias mediante la enseñanza bíblica, la adoración, la formación de líderes y el acompañamiento pastoral.</p>
+        <p class="body-p">Iglesia Fuente Inagotable es una congregación cristiana evangélica ubicada en San Pedro de Macorís, República Dominicana. Fundada en 1998, la cual ha desarrollado una labor enfocada en la transformación espiritual y social de las personas, promoviendo el crecimiento integral de las familias mediante la enseñanza bíblica, la adoración, la formación de líderes y el acompañamiento pastoral.</p>
         <p class="body-p" style="margin-top:16px;">Hoy cuenta con una membresía de 258 personas — 190 adultos y 68 niños — y una red de seis Casas de Misión desde donde se realizan labores de evangelismo, discipulado, apoyo espiritual y servicio comunitario en distintos sectores de la ciudad.</p>
         <div class="perfil-tags">
           <span class="tag">Evangelismo</span>
@@ -646,21 +670,31 @@ footer{background:var(--navy-deep);padding:clamp(48px,7vw,72px) var(--page-x) 32
         <p class="eyebrow">Programas y Servicios</p>
         <h2 class="h2">Agenda semanal</h2>
         <p class="body-p">Cada semana abrimos las puertas para la oración, el estudio bíblico, el evangelismo y la adoración. Todos son bienvenidos.</p>
-        <div class="programas-highlight">
-          <p>SERVICIO PRINCIPAL</p>
-          <h3>Culto Dominical · 9:00 AM</h3>
-          <p>Calle Derecho #16A, Urbanización Hazim, San Pedro de Macorís</p>
+        <div class="programas-location">
+          <div class="programas-address">
+            <p class="programas-address-label">UBICACIÓN</p>
+            <p class="programas-address-text">Calle Derecho #16A, Urbanización Hazim</p>
+            <p class="programas-address-city">San Pedro de Macorís, República Dominicana</p>
+          </div>
+          <div class="programas-map">
+            <iframe title="Ubicación — Iglesia Fuente Inagotable" src="https://maps.google.com/maps?q=Calle+Derecho+16A,+Urbanizaci%C3%B3n+Hazim,+San+Pedro+de+Macor%C3%ADs,+Rep%C3%BAblica+Dominicana&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+          </div>
         </div>
       </div>
-      <div class="schedule-list reveal">
-        <div class="schedule-row"><span class="schedule-day">MARTES</span><span class="schedule-name">Oración y Estudio Bíblico</span><span class="schedule-time">7:00 PM</span></div>
-        <div class="schedule-row"><span class="schedule-day">JUEVES</span><span class="schedule-name">Evangelismo comunitario</span><span class="schedule-time">5:00 PM</span></div>
-        <div class="schedule-row"><span class="schedule-day">JUEVES</span><span class="schedule-name">Estudio Bíblico Online <span style="font-weight:500;color:#8A93A0;font-size:12.5px;">(Google Meet / Zoom)</span></span><span class="schedule-time">8:00 PM</span></div>
-        <div class="schedule-row"><span class="schedule-day">VIERNES</span><span class="schedule-name">Culto en las Fuentes</span><span class="schedule-time">7:00 PM</span></div>
-        <div class="schedule-row"><span class="schedule-day">VIERNES</span><span class="schedule-name">Vigilia de Hombres / Vigilia de Mujeres</span><span class="schedule-time">10:00 PM</span></div>
-        <div class="schedule-row"><span class="schedule-day">SÁBADO</span><span class="schedule-name">Culto de Niños — Iglesia Infantil</span><span class="schedule-time">3:00 PM</span></div>
-        <div class="schedule-row"><span class="schedule-day">DOMINGO</span><span class="schedule-name">Culto Dominical</span><span class="schedule-time" style="color:var(--gold-dark);font-weight:800;">9:00 AM</span></div>
-        <div class="schedule-row"><span class="schedule-day">DIARIO</span><span class="schedule-name">Tiempo de Oración</span><span class="schedule-time">3:00 PM</span></div>
+      <div class="programas-schedule reveal">
+        <div class="programas-highlight">
+          <p>SERVICIO PRINCIPAL</p>
+          <h3>Culto Dominical · Domingos 9:00 AM</h3>
+        </div>
+        <div class="schedule-list">
+          <div class="schedule-row"><span class="schedule-day">MARTES</span><span class="schedule-name">Oración y Estudio Bíblico</span><span class="schedule-time">7:00 PM</span></div>
+          <div class="schedule-row"><span class="schedule-day">JUEVES</span><span class="schedule-name">Evangelismo comunitario</span><span class="schedule-time">5:00 PM</span></div>
+          <div class="schedule-row"><span class="schedule-day">JUEVES</span><span class="schedule-name">Estudio Bíblico Online </span><span class="schedule-time">8:00 PM</span></div>
+          <div class="schedule-row"><span class="schedule-day">VIERNES</span><span class="schedule-name">Culto en las Fuentes</span><span class="schedule-time">7:00 PM</span></div>
+          <div class="schedule-row"><span class="schedule-day">VIERNES</span><span class="schedule-name">Vigilia de Damas o Caballeros</span><span class="schedule-time">10:00 PM</span></div>
+          <div class="schedule-row"><span class="schedule-day">SÁBADO</span><span class="schedule-name">Culto de Niños — Iglesia Infantil</span><span class="schedule-time">3:00 PM</span></div>
+          <div class="schedule-row"><span class="schedule-day">DIARIO</span><span class="schedule-name">Tiempo de Oración</span><span class="schedule-time">3:00 PM</span></div>
+        </div>
       </div>
     </div>
   </div>
@@ -732,7 +766,7 @@ footer{background:var(--navy-deep);padding:clamp(48px,7vw,72px) var(--page-x) 32
   <div class="section-inner">
     <div class="proyectos-header reveal">
       <div><p class="eyebrow">Proyectos de Desarrollo</p><h2 class="h2">Construyendo el futuro de la obra</h2></div>
-      <a href="#contacto" class="link-all">QUIERO APOYAR →</a>
+      <a href="#contacto" class="link-all is-hidden">QUIERO APOYAR →</a>
     </div>
     <div class="proyectos-grid">
       <article class="proyecto-card reveal">
@@ -741,7 +775,7 @@ footer{background:var(--navy-deep);padding:clamp(48px,7vw,72px) var(--page-x) 32
           <p class="proyecto-label">EN PROCESO · SEGUNDO NIVEL</p>
           <h3>Centro Comunitario y de Convenciones Multifuncional</h3>
           <p>Reconstrucción estructural del segundo nivel para habilitar un salón multifuncional destinado a bodas, celebraciones, conferencias, seminarios, talleres, actividades infantiles y programas de servicio social.</p>
-          <a href="#contacto" class="proyecto-link">QUIERO APOYAR ESTE PROYECTO →</a>
+          <a href="#contacto" class="proyecto-link" data-contact-motivo="Apoyo a proyectos">Quiero Sumarme como Voluntario →</a>
         </div>
       </article>
       <article class="proyecto-card reveal">
@@ -750,15 +784,15 @@ footer{background:var(--navy-deep);padding:clamp(48px,7vw,72px) var(--page-x) 32
           <p class="proyecto-label">EXPANSIÓN FUTURA</p>
           <h3>Compra de Solar Adyacente</h3>
           <p>La congregación proyecta la adquisición de un solar adyacente a las instalaciones actuales para ampliar el templo y desarrollar nuevas áreas ministeriales en beneficio de la iglesia y la comunidad.</p>
-          <a href="#contacto" class="proyecto-link">QUIERO APOYAR ESTE PROYECTO →</a>
+          <a href="#contacto" class="proyecto-link" data-contact-motivo="Apoyo a proyectos">Conoce más de la Visión →</a>
         </div>
       </article>
     </div>
   </div>
 </section>
 
-<!-- DONACIONES -->
-<section id="donaciones">
+<!-- DONACIONES (oculto temporalmente) -->
+<section id="donaciones" class="is-hidden">
   <div class="section-inner">
     <div class="donate-split">
       <div class="reveal">
@@ -802,9 +836,9 @@ footer{background:var(--navy-deep);padding:clamp(48px,7vw,72px) var(--page-x) 32
         <h2 class="h2">Estamos aquí<br><em>para ti.</em></h2>
         <p class="body-p" style="margin-bottom:2.5rem;">¿Tienes preguntas, necesitas oración o quieres conocernos? No dudes en escribirnos — con amor te atendemos.</p>
         <div class="c-item"><div class="c-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21s7-4.5 7-11a7 7 0 1 0-14 0c0 6.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></div><div><div class="c-label">Dirección</div><div class="c-val">Calle Derecho #16A, Urbanización Hazim<br>San Pedro de Macorís, RD</div></div></div>
-        <div class="c-item"><div class="c-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg></div><div><div class="c-label">Teléfono</div><div class="c-val"><a href="tel:+18098641072">+1 (809) 864-1072</a></div></div></div>
+        <div class="c-item"><div class="c-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.435 9.884-9.884 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg></div><div><div class="c-label">WhatsApp</div><div class="c-val"><a href="https://wa.me/18098641072" target="_blank" rel="noopener noreferrer">+1 (809) 864-1072</a></div></div></div>
         <div class="c-item"><div class="c-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></div><div><div class="c-label">Correo</div><div class="c-val"><a href="mailto:fuenteinagotable.spm@gmail.com">fuenteinagotable.spm@gmail.com</a></div></div></div>
-        <div class="c-item"><div class="c-ico" aria-hidden="true"><svg class="c-ico-fill" viewBox="0 0 24 24"><path d="M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4Zm5 4.5A4.5 4.5 0 1 0 16.5 12 4.5 4.5 0 0 0 12 7.5Zm5.25-2.75a1 1 0 1 0 1 1 1 1 0 0 0-1-1Z"/></svg></div><div><div class="c-label">Instagram</div><div class="c-val"><a href="https://instagram.com/FuenteInagotableRD" target="_blank" rel="noopener noreferrer">@FuenteInagotableRD</a></div></div></div>
+        <div class="c-item"><div class="c-ico" aria-hidden="true"><svg class="c-ico-fill" viewBox="0 0 24 24"><path d="M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4Zm5 4.5A4.5 4.5 0 1 0 16.5 12 4.5 4.5 0 0 0 12 7.5Zm5.25-2.75a1 1 0 1 0 1 1 1 1 0 0 0-1-1Z"/></svg></div><div><div class="c-label">Instagram</div><div class="c-val"><a href="https://instagram.com/FuenteInagotable" target="_blank" rel="noopener noreferrer">@FuenteInagotableRD</a></div></div></div>
       </div>
       <div class="reveal" style="transition-delay:.15s;">
         <form id="contactForm" class="form-wrap" action="https://formspree.io/f/mwvjwbnl" method="POST" novalidate>
@@ -829,7 +863,7 @@ footer{background:var(--navy-deep);padding:clamp(48px,7vw,72px) var(--page-x) 32
             </select>
           </div>
           <div class="fg"><label for="contactMensaje">Mensaje</label><textarea id="contactMensaje" name="mensaje" placeholder="Cuéntanos..." required minlength="10" maxlength="2000"></textarea></div>
-          <button type="submit" class="form-submit">Enviar mensaje</button>
+          <button type="submit" class="form-submit">Conectar con la Iglesia</button>
           <p class="form-status" id="contactFormStatus" role="status" aria-live="polite" hidden></p>
         </form>
       </div>
@@ -864,7 +898,7 @@ footer{background:var(--navy-deep);padding:clamp(48px,7vw,72px) var(--page-x) 32
         <li><a href="#contacto">Petición de Oración</a></li>
       </ul>
     </div>
-    <div class="f-col">
+    <div class="f-col is-hidden">
       <h4>Donar</h4>
       <ul>
         <li><a href="#donaciones">Donar Ahora</a></li>
@@ -877,8 +911,9 @@ footer{background:var(--navy-deep);padding:clamp(48px,7vw,72px) var(--page-x) 32
       <ul class="f-social">
         <li><a class="f-social-link" href="https://instagram.com/FuenteInagotableRD" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4Zm5 4.5A4.5 4.5 0 1 0 16.5 12 4.5 4.5 0 0 0 12 7.5Zm5.25-2.75a1 1 0 1 0 1 1 1 1 0 0 0-1-1Z"/></svg>Instagram</a></li>
         <li><a class="f-social-link" href="https://facebook.com/FuenteInagotableRD" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12S0 5.446 0 12.073c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>Facebook</a></li>
-        <li><a class="f-social-link" href="https://youtube.com/@FuenteInagotableRD" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>YouTube</a></li>
+        <li><a class="f-social-link" href="https://youtube.com/@FuenteInagotable" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>YouTube</a></li>
         <li><a class="f-social-link" href="https://tiktok.com/@FuenteInagotableRD" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>TikTok</a></li>
+        <li><a class="f-social-link" href="https://wa.me/18098641072" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.435 9.884-9.884 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>WhatsApp</a></li>
       </ul>
     </div>
   </div>
@@ -889,6 +924,9 @@ footer{background:var(--navy-deep);padding:clamp(48px,7vw,72px) var(--page-x) 32
 </footer>
 
 <script>
+window.EN_VIVO=window.EN_VIVO===false;
+if(window.EN_VIVO)document.body.classList.add('is-live');
+
 function toggleMenu(){document.getElementById('mobMenu').classList.toggle('open');}
 function closeMenu(){document.getElementById('mobMenu').classList.remove('open');}
 
@@ -904,7 +942,6 @@ function closeMenu(){document.getElementById('mobMenu').classList.remove('open')
     ['misiones','#misiones'],
     ['impacto','#misiones'],
     ['proyectos','#proyectos'],
-    ['donaciones','#proyectos'],
     ['faq','#contacto'],
     ['contacto','#contacto']
   ];
@@ -921,12 +958,25 @@ function closeMenu(){document.getElementById('mobMenu').classList.remove('open')
     const navH=document.getElementById('nav')?.offsetHeight||72;
     const y=window.scrollY+navH+48;
     let active='#perfil';
+    let bestTop=-Infinity;
     sectionMap.forEach(([id,href])=>{
       const el=document.getElementById(id);
-      if(el&&el.offsetTop<=y)active=href;
+      if(!el||getComputedStyle(el).display==='none'||el.offsetHeight===0)return;
+      const top=el.getBoundingClientRect().top+window.scrollY;
+      if(top<=y&&top>bestTop){
+        bestTop=top;
+        active=href;
+      }
     });
     setActive(active);
   }
+
+  navLinks.forEach(link=>{
+    link.addEventListener('click',()=>{
+      const href=link.getAttribute('href');
+      if(href&&href.startsWith('#'))setActive(href);
+    });
+  });
 
   window.addEventListener('scroll',updateActiveNav,{passive:true});
   window.addEventListener('resize',updateActiveNav,{passive:true});
@@ -951,11 +1001,44 @@ function setContactFormStatus(message,type){
   status.hidden=!message;
 }
 
+function getContactSubmitLabel(motivo){
+  return motivo==='Solicitud de oración'?'Enviar mi Petición':'Conectar con la Iglesia';
+}
+
+function updateContactSubmitLabel(){
+  const form=document.getElementById('contactForm');
+  const select=document.getElementById('contactMotivo');
+  const btn=form?.querySelector('.form-submit');
+  if(!btn||btn.disabled)return;
+  if(btn.textContent==='Enviando...'||btn.textContent==='¡Mensaje enviado!')return;
+  btn.textContent=getContactSubmitLabel(select?.value||'');
+}
+
+function openContactForm(motivo){
+  const select=document.getElementById('contactMotivo');
+  if(select&&motivo)select.value=motivo;
+  updateContactSubmitLabel();
+  document.getElementById('contacto')?.scrollIntoView({behavior:'smooth',block:'start'});
+  setTimeout(()=>document.getElementById('contactNombre')?.focus({preventScroll:true}),450);
+}
+
+(function initContactDeepLinks(){
+  document.querySelectorAll('[data-contact-motivo]').forEach(link=>{
+    link.addEventListener('click',e=>{
+      e.preventDefault();
+      openContactForm(link.dataset.contactMotivo);
+      closeMenu();
+    });
+  });
+})();
+
 (function initContactForm(){
   const form=document.getElementById('contactForm');
   if(!form)return;
   const btn=form.querySelector('.form-submit');
-  const defaultLabel=btn?btn.textContent:'Enviar mensaje';
+  const select=document.getElementById('contactMotivo');
+  select?.addEventListener('change',updateContactSubmitLabel);
+  updateContactSubmitLabel();
 
   form.addEventListener('submit',async(e)=>{
     e.preventDefault();
@@ -993,9 +1076,9 @@ function setContactFormStatus(message,type){
         setContactFormStatus('Gracias. Hemos recibido tu mensaje y te responderemos pronto.','success');
         setTimeout(()=>{
           if(btn){
-            btn.textContent=defaultLabel;
             btn.style.background='';
             btn.disabled=false;
+            updateContactSubmitLabel();
           }
           setContactFormStatus('','');
         },5000);
@@ -1008,8 +1091,8 @@ function setContactFormStatus(message,type){
     }
 
     if(btn){
-      btn.textContent=defaultLabel;
       btn.disabled=false;
+      updateContactSubmitLabel();
     }
   });
 })();
